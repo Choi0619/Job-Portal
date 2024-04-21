@@ -5,6 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IT For Hire</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            border-radius: 4px;
+            overflow: hidden;
+            padding-top: 8px;
+        }
+
+        .dropdown-content a {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+            color: #000; /* Set font color to black */
+        }
+
+        .dropdown-content a.username {
+            color: #000; /* Set font color to black */
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown .dropbtn {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-family: "Montserrat", sans-serif;
+            font-size: 1em;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: color 0.3s;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            padding: 8px 16px;
+        }
+
+        .dropdown:hover .dropbtn {
+            border-color: #3e8e41;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+    </style>
 </head>
 <body>
     <?php session_start(); ?>
@@ -25,9 +85,9 @@
                     echo '<li class="dropdown">';
                     echo '<button class="dropbtn">' . $_SESSION['username'] . '</button>';
                     echo '<div class="dropdown-content">';
-                    echo '<a href="profile.php">My Profile</a>';
-                    echo '<a href="savedjobs.php">Saved Jobs</a>'; // New link for Saved Jobs
-                    echo '<a href="logout.php">Logout</a>';
+                    echo '<a href="profile.php" class="username">My Profile</a>';
+                    echo '<a href="savedjob.php" class="username">Saved Jobs</a>'; // New link for Saved Jobs
+                    echo '<a href="logout.php" class="username">Logout</a>';
                     echo '</div>';
                     echo '</li>';
                 } else {

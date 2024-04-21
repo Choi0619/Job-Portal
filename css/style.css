@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600&display=swap');
 
 :root {
-    /* ... other color definitions ... */
     --header-bg-color: #333; /* Assuming you want a dark header background */
 }
 
@@ -17,6 +16,7 @@ header {
     margin: 0 auto; /* Centers the title horizontally */
     font-size: 2.5rem; /* Large font size for the title */
     font-weight: 600; /* Font weight for the title */
+    margin-bottom: 0.5rem;
 }
 
 /* Navigation Styles */
@@ -57,7 +57,7 @@ nav ul li a:hover {
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1;
 }
 
