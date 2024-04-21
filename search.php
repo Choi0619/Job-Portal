@@ -80,3 +80,9 @@ $result = mysqli_query($conn, $sql);
 // Include footer
 include('footer.php');
 ?>
+<style>
+
+    .apply-button {
+    margin-bottom: 20px; /* Add margin below the button */
+    }
+</style>
