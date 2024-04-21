@@ -26,6 +26,7 @@
                     echo '<button class="dropbtn">' . $_SESSION['username'] . '</button>';
                     echo '<div class="dropdown-content">';
                     echo '<a href="profile.php">My Profile</a>';
+                    echo '<a href="savedjobs.php">Saved Jobs</a>'; // New link for Saved Jobs
                     echo '<a href="logout.php">Logout</a>';
                     echo '</div>';
                     echo '</li>';
