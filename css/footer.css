@@ -1,5 +1,87 @@
 /* Footer CSS, created by Gyuhwan Choi */
 
+/* Common Styles */
+.contact-form input[type="email"],
+.contact-form textarea,
+form input[type="text"],
+form input[type="email"],
+form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.contact-form textarea,
+form textarea {
+  height: 120px;
+}
+
+.contact-form button[type="submit"],
+form button[type="submit"] {
+  display: block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 1rem;
+}
+
+.contact-form button[type="submit"]:hover,
+form button[type="submit"]:hover {
+  background-color: #555;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+main {
+  padding: 2rem;
+}
+
+section {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+form button[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form button[type="submit"]:hover {
+  background-color: #555;
+}
+
 footer {
   background-color: #111;
   color: #fff;
@@ -69,38 +151,6 @@ footer {
   color: #fff;
   text-decoration: none;
   font-size: 1.2rem;
-}
-
-.contact-form input[type="email"],
-.contact-form input[type="text"],
-.contact-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-.contact-form textarea {
-  height: 120px;
-}
-
-.contact-form button[type="submit"] {
-  display: block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #333;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  font-size: 1rem;
-}
-
-.contact-form button[type="submit"]:hover {
-  background-color: #555;
 }
 
 .footer-bottom {
@@ -183,38 +233,6 @@ footer {
   .links a {
     color: #fff;
     text-decoration: none;
-  }
-
-  .contact-form input[type="email"],
-  .contact-form input[type="text"],
-  .contact-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-  }
-
-  .contact-form textarea {
-    height: 120px;
-  }
-
-  .contact-form button[type="submit"] {
-    display: block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #333;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    font-size: 1rem;
-  }
-
-  .contact-form button[type="submit"]:hover {
-    background-color: #555;
   }
 
   .footer-bottom {
