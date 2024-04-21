@@ -80,9 +80,9 @@
             <div class="contact-member">
                 <img src="media/post.png" alt="Placeholder Image">
                 <div class="contact-member-info">
-                    <h3>Gyuhwan Cho</h3>
+                    <h3>Gyuhwan Choi</h3>
                     <p>Email: gchoi6@hawk.iit.edu</p>
-                    <p>Phone: 312-1283-1942</p>
+                    <p>Phone: +1 312-1283-1942</p>
                 </div>
             </div>
             <div class="contact-member">
