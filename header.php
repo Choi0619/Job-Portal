@@ -1,3 +1,8 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,7 +72,6 @@
     </style>
 </head>
 <body>
-    <?php session_start(); ?>
     <header>
         <div class="title-container">
             <h1>IT For Hire</h1>

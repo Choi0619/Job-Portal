@@ -13,22 +13,21 @@ if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Retrieve the hashed password and user ID from the database
-    $query = $conn->prepare("SELECT user_id, password FROM users WHERE username = ?");
+    // Retrieve the hashed password and company ID from the companies table
+    $query = $conn->prepare("SELECT company_id, password FROM companies WHERE username = ?");
     $query->bind_param("s", $username);
     $query->execute();
     $result = $query->get_result();
 
     if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        $hashed_password = $user['password'];
+        $row = $result->fetch_assoc();
+        $hashed_password = $row['password'];
 
         // Verify the password
         if (password_verify($password, $hashed_password)) {
-            $_SESSION['user'] = $username;
-            $_SESSION['username'] = $username; // Set username in session
-            $_SESSION['user_id'] = $user['user_id']; // Set user ID in session
-            header("Location: index.php"); // Redirect to index.php after successful login
+            $_SESSION['company_user'] = true;
+            $_SESSION['company_id'] = $row['company_id']; // Set company ID in session
+            header("Location: index.php"); // Redirect to index.php after successful login for company users
             exit();
         } else {
             $error_message = "Invalid username or password.";
@@ -44,7 +43,7 @@ if (isset($_POST['login'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Company Login</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .toggle-container {
@@ -120,11 +119,11 @@ if (isset($_POST['login'])) {
     <?php include('header.php'); ?>
     <div class="login-container">
         <div class="toggle-status">
-            <p id="userStatus">Log in as applicant user</p>
+            <p id="userStatus">Log in as company user</p>
         </div>
         <div class="toggle-container">
             <label class="switch">
-                <input type="checkbox" id="toggleButton" class="active" onclick="toggleUser()">
+                <input type="checkbox" id="toggleButton" class="active" onclick="toggleUser()" checked> <!-- Note: Toggle button starts on the right -->
                 <span class="slider round"></span>
             </label>
         </div>
@@ -141,7 +140,7 @@ if (isset($_POST['login'])) {
             <input type="text" id="username" class="login__input" name="username" required>
             <label for="password" class="login__label">Password:</label>
             <input type="password" id="password" class="login__input" name="password" required>
-            <button type="submit" class="login__submit" name="login">Login</button>
+            <button type="submit" class="login__submit company" name="login">Login</button> <!-- Note: Added 'company' class to change button color to blue -->
             <?php if (!empty($error_message)): ?>
                 <p class="login__forgot" style="color: red;"><?php echo $error_message; ?></p>
             <?php endif; ?>
@@ -149,26 +148,29 @@ if (isset($_POST['login'])) {
         </form>
     </div>
     <?php include('footer.php'); ?>
-
     <script>
-        function toggleUser() {
-            const toggleButton = document.getElementById('toggleButton');
-            const slider = document.querySelector('.slider');
-            const userStatus = document.getElementById('userStatus');
+    function toggleUser() {
+        const toggleButton = document.getElementById('toggleButton');
+        const slider = document.querySelector('.slider');
+        const userStatus = document.getElementById('userStatus');
 
-            if (toggleButton.checked) {
-                slider.style.backgroundColor = '#2196F3'; // Blue color
-                userStatus.textContent = "Log in as company user";
-                document.querySelector('.login__submit').classList.add('company'); // Add class for company user
-                // Redirect to login_comp.php
-                window.location.href = 'login_comp.php';
-            } else {
-                slider.style.backgroundColor = '#3cb371'; // Green color
-                userStatus.textContent = "Log in as applicant user";
-                document.querySelector('.login__submit').classList.remove('company'); // Remove class for applicant user
-            }
+        if (toggleButton.checked) {
+            slider.style.backgroundColor = '#2196F3'; // Blue color
+            userStatus.textContent = "Log in as company user";
+            document.querySelector('.login__submit').classList.add('company'); // Add class for company user
+        } else {
+            slider.style.backgroundColor = '#3cb371'; // Green color
+            userStatus.textContent = "Log in as applicant user";
+            document.querySelector('.login__submit').classList.remove('company'); // Remove class for applicant user
+            // Add a delay before redirecting to login.php
+            setTimeout(function() {
+                window.location.href = 'login.php';
+            }, 200); // Delay of 0.2 seconds (200 milliseconds)
         }
-    </script>
+    }
+</script>
+
+
 
 </body>
 </html>
