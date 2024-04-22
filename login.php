@@ -151,24 +151,27 @@ if (isset($_POST['login'])) {
     <?php include('footer.php'); ?>
 
     <script>
-        function toggleUser() {
-            const toggleButton = document.getElementById('toggleButton');
-            const slider = document.querySelector('.slider');
-            const userStatus = document.getElementById('userStatus');
+    function toggleUser() {
+        const toggleButton = document.getElementById('toggleButton');
+        const slider = document.querySelector('.slider');
+        const userStatus = document.getElementById('userStatus');
 
-            if (toggleButton.checked) {
-                slider.style.backgroundColor = '#2196F3'; // Blue color
-                userStatus.textContent = "Log in as company user";
-                document.querySelector('.login__submit').classList.add('company'); // Add class for company user
-                // Redirect to login_comp.php
+        if (toggleButton.checked) {
+            slider.style.backgroundColor = '#2196F3'; // Blue color
+            userStatus.textContent = "Log in as company user";
+            document.querySelector('.login__submit').classList.add('company'); // Add class for company user
+            // Redirect to login_comp.php with a delay
+            setTimeout(function() {
                 window.location.href = 'login_comp.php';
-            } else {
-                slider.style.backgroundColor = '#3cb371'; // Green color
-                userStatus.textContent = "Log in as applicant user";
-                document.querySelector('.login__submit').classList.remove('company'); // Remove class for applicant user
-            }
+            }, 200); // Delay of 0.2 seconds (200 milliseconds)
+        } else {
+            slider.style.backgroundColor = '#3cb371'; // Green color
+            userStatus.textContent = "Log in as applicant user";
+            document.querySelector('.login__submit').classList.remove('company'); // Remove class for applicant user
         }
-    </script>
+    }
+</script>
+
 
 </body>
 </html>
