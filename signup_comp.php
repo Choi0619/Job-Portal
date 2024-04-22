@@ -21,7 +21,7 @@ if (isset($_POST['register'])) {
         $error_message = "Passwords do not match!";
     } else {
         // Check if email already exists
-        $email_query = $conn->prepare("SELECT * FROM users WHERE email = ?");
+        $email_query = $conn->prepare("SELECT * FROM companies WHERE email = ?");
         $email_query->bind_param("s", $email);
         $email_query->execute();
         $email_result = $email_query->get_result();
@@ -29,32 +29,22 @@ if (isset($_POST['register'])) {
         if ($email_result->num_rows > 0) {
             $error_message = "Email already in use!";
         } else {
-            // Check if username already exists
-            $username_query = $conn->prepare("SELECT * FROM users WHERE username = ?");
-            $username_query->bind_param("s", $username);
-            $username_query->execute();
-            $username_result = $username_query->get_result();
+            // Hash the password for security
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            if ($username_result->num_rows > 0) {
-                $error_message = "Username already in use!";
+            // Insert into database
+            $query = $conn->prepare("INSERT INTO companies (username, email, password) VALUES (?, ?, ?)");
+            $query->bind_param("sss", $username, $email, $hashed_password);
+            $query->execute();
+
+            if ($query->affected_rows > 0) {
+                // Redirect to login page after successful registration
+                echo '<script>alert("You have successfully registered for an account!");';
+                echo 'setTimeout(function(){ window.location.href = "login.php"; }, 1000);</script>';
+                header("Location: login.php");
+                exit();
             } else {
-                // Hash the password for security
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-                // Insert into database
-                $query = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-                $query->bind_param("sss", $username, $email, $hashed_password);
-                $query->execute();
-
-                if ($query->affected_rows > 0) {
-                    // Redirect to login page after successful registration
-                    echo '<script>alert("You have successfully registered for an account!");';
-                    echo 'setTimeout(function(){ window.location.href = "login.php"; }, 1000);</script>';
-                    header("Location: login.php");
-                    exit();
-                } else {
-                    $error_message = "Registration failed!";
-                }
+                $error_message = "Registration failed!";
             }
         }
     }
@@ -146,7 +136,7 @@ if (isset($_POST['register'])) {
             color: #555; /* Dark grey color */
         }
         .login__submit.company {
-            background-color: #4b86f0; /* Bluish color for company user */
+            background-color: #2196F3; /* Blue color */
         }
     </style>
     <script>
@@ -183,17 +173,16 @@ if (isset($_POST['register'])) {
             }
         });
     </script>
-
 </head>
 <body>
     <?php include('header.php'); ?>
     <div class="login-container">
-    <div class="toggle-status">
-            <p id="userStatus">Sign up as applicant user</p>
+        <div class="toggle-status">
+            <p id="userStatus">Sign up as company user</p>
         </div>
         <div class="toggle-container">
-            <label class="switch">
-                <input type="checkbox" id="toggleButton" class="active" onclick="toggleUser()">
+        <label class="switch">
+                <input type="checkbox" id="toggleButton" class="active" onclick="toggleUser()" checked> <!-- Note: Toggle button starts on the right -->
                 <span class="slider round"></span>
             </label>
         </div>
@@ -220,7 +209,7 @@ if (isset($_POST['register'])) {
             <input type="password" id="confirm_password" class="login__input" name="confirm_password" required>
             <div class="error-message" style="display: none;">Password does not meet the requirements.</div>
 
-            <button type="submit" class="login__submit" name="register">Sign Up</button>
+            <button type="submit" class="login__submit company" name="register">Sign Up</button>
             
             <?php if (!empty($error_message)): ?>
                 <p style="color: red;"><?php echo $error_message; ?></p>
@@ -230,7 +219,6 @@ if (isset($_POST['register'])) {
         </form>
     </div>
     <?php include('footer.php'); ?>
-
     <script>
     function toggleUser() {
         const toggleButton = document.getElementById('toggleButton');
@@ -240,16 +228,19 @@ if (isset($_POST['register'])) {
         if (toggleButton.checked) {
             slider.style.backgroundColor = '#2196F3'; // Blue color
             userStatus.textContent = "Sign up as company user";
-            // Redirect to signup_comp.php with a delay
-            setTimeout(function() {
-                window.location.href = 'signup_comp.php';
-            }, 200); // Delay of 0.2 seconds (200 milliseconds)
+            document.querySelector('.login__submit').classList.add('company'); // Add class for company user
         } else {
             slider.style.backgroundColor = '#3cb371'; // Green color
             userStatus.textContent = "Sign up as applicant user";
+            document.querySelector('.login__submit').classList.remove('company'); // Remove class for applicant user
+            // Add a delay before redirecting to login.php
+            setTimeout(function() {
+                window.location.href = 'signup.php';
+            }, 200); // Delay of 0.2 seconds (200 milliseconds)
         }
     }
 </script>
+
 
 </body>
 </html>
