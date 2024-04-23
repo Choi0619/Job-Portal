@@ -133,7 +133,7 @@ if (isset($_SESSION['user_id'])) {
                     <div class="profile-info">
                         <p><strong>Username:</strong> <?php echo $username; ?></p>
                         <p><strong>Email:</strong> <?php echo $email; ?></p>
-                        <form action="update_profile.php" method="post">
+                        <form action="update_profile.php" method="post" enctype="multipart/form-data">
                             <label for="f_name">First Name:</label>
                             <input type="text" id="f_name" name="f_name" value="<?php echo $f_name !== null ? $f_name : ''; ?>"><br>
                             <label for="l_name">Last Name:</label>
@@ -151,25 +151,21 @@ if (isset($_SESSION['user_id'])) {
                             </select><br>
                             <label for="address">Address:</label>
                             <textarea id="address" name="address"><?php echo $address !== null ? $address : ''; ?></textarea><br>
+                            <?php if ($resume !== null) : ?>
+                                <div class="profile-resume">
+                                    <p><strong>Resume:</strong></p>
+                                    <a href="view_resume.php" target="_blank">View Resume</a>
+                                    <label for="new_resume">Upload New Resume:</label>
+                                    <input type="file" name="resume" id="resume">
+                                    <input type="submit" value="Save">
+                                </div>
+                            <?php else : ?>
+                                <label for="resume">Upload Resume:</label>
+                                <input type="file" name="resume" id="resume">
+                                <input type="submit" value="Save">
+                            <?php endif; ?>
                         </form>
                     </div>
-
-                    <div class="profile-resume">
-                        <h3>Resume</h3>
-                        <?php if ($resume !== null) : ?>
-                            <p>You have uploaded a resume. <a href="download_resume.php">Download Resume</a></p>
-                            <p><a href="update_resume.php">Update Resume</a></p>
-                        <?php else : ?>
-                            <form action="upload_resume.php" method="post" enctype="multipart/form-data">
-                                <input type="file" name="resume" id="resume">
-                                <input type="submit" value="Upload Resume" name="submit" style="background-color: #28a745; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                    
-                    <form action="update_profile.php" method="post">
-                        <input type="submit" value="Save">
-                    </form>
                 </div>
             </div>
 

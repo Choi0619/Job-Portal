@@ -1,25 +1,79 @@
 <?php
-// Include the database connection
-include('db.php');
+session_start(); // Start the session
+include('db.php'); // Include the database connection
 
-// Check if the form is submitted
+// Check if user is logged in
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php"); // Redirect to login page if user is not logged in
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve user's username from session
+    $username = $_SESSION['user'];
+
     // Retrieve form data
-    $f_name = $_POST['f_name'];
-    $l_name = $_POST['l_name'];
-    $date_of_birth = $_POST['date_of_birth'];
-    $phone = $_POST['phone'];
-    $gender = $_POST['gender'];
-    $address = $_POST['address'];
+    $f_name = !empty($_POST['f_name']) ? $_POST['f_name'] : null;
+    $l_name = !empty($_POST['l_name']) ? $_POST['l_name'] : null;
+    $date_of_birth = !empty($_POST['date_of_birth']) ? date('Y-m-d', strtotime($_POST['date_of_birth'])) : null; // Format date properly
+    $phone = !empty($_POST['phone']) ? $_POST['phone'] : null;
+    $gender = !empty($_POST['gender']) && in_array($_POST['gender'], array('M', 'F', 'Other')) ? $_POST['gender'] : null; // Check if gender is set and valid
+    $address = !empty($_POST['address']) ? $_POST['address'] : null;
+    $resume_path = null; // Initialize resume path
 
-    // Update user profile in the database
-    $user_id = $_SESSION['user_id'];
-    $query = $conn->prepare("UPDATE users SET f_name = ?, l_name = ?, date_of_birth = ?, phone = ?, gender = ?, address = ? WHERE user_id = ?");
-    $query->bind_param("ssssssi", $f_name, $l_name, $date_of_birth, $phone, $gender, $address, $user_id);
-    $query->execute();
+    // Check if resume was uploaded
+    if (isset($_FILES['resume']) && $_FILES['resume']['error'] === UPLOAD_ERR_OK) {
+        $resume_tmp_name = $_FILES['resume']['tmp_name'];
+        $resume_size = $_FILES['resume']['size'];
+        $resume_type = $_FILES['resume']['type'];
 
-    // Redirect to profile page
-    header("Location: profile.php");
+        // Check file size
+        if ($resume_size > 5000000) { // 5MB
+            echo "Error: File size exceeds maximum limit.";
+            exit();
+        }
+
+        // Check file type
+        $allowed_types = array('pdf');
+        $file_parts = pathinfo($_FILES['resume']['name']);
+        $file_extension = strtolower($file_parts['extension']);
+
+        if (!in_array($file_extension, $allowed_types)) {
+            echo "Error: Only PDF files are allowed.";
+            exit();
+        }
+
+        // Read file contents
+        $resume_data = file_get_contents($resume_tmp_name);
+
+        // Update resume path
+        $resume_path = $resume_data; // You need to insert the resume data into the database directly
+
+        // If you prefer to store the resume data in a file system, uncomment the following lines and comment the line above
+        /*
+        $upload_dir = "resumes/";
+        $resume_name = $_FILES['resume']['name'];
+        $resume_path = $upload_dir . $resume_name;
+        if (!move_uploaded_file($resume_tmp_name, $resume_path)) {
+            echo "Error: Failed to upload resume.";
+            exit();
+        }
+        */
+    }
+
+    // Update user information
+    $query = $conn->prepare("UPDATE users SET f_name = ?, l_name = ?, date_of_birth = ?, phone = ?, gender = ?, address = ?, resume = ? WHERE username = ?");
+    $query->bind_param("ssssssss", $f_name, $l_name, $date_of_birth, $phone, $gender, $address, $resume_path, $username);
+
+    if ($query->execute()) {
+        echo "<script>alert('User information updated successfully.'); window.location.href='profile.php';</script>";
+        exit();
+    } else {
+        echo "Error: Failed to update user information in database.";
+        exit();
+    }
+} else {
+    echo "Error: Invalid request method.";
     exit();
 }
 ?>
