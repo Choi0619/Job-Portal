@@ -39,7 +39,13 @@ $result = mysqli_query($conn, $sql);
             echo "<h3>" . $row['title'] . "</h3>";
             echo "<p><strong>Company:</strong> " . $row['company_name'] . "</p>";
             echo "<p><strong>Description:</strong> " . $row['description'] . "</p>";
-            echo '<a class="apply-button" href="apply.php?job_id=' . $row['job_id'] . '">Apply</a>';
+            // Check if user is not a company user before displaying the Apply button
+            if (!isset($_SESSION['company_user'])) {
+                echo '<a class="apply-button" href="apply.php?job_id=' . $row['job_id'] . '">Apply</a>';
+            } else {
+                // Display a message for company users instead of the Apply button
+                echo '<p><em>Company users cannot apply for jobs.</em></p>';
+            }
             echo "</div>";
         }
         ?>
@@ -68,5 +74,8 @@ include('footer.php');
 <style>
     .apply-button {
         margin-bottom: 20px;
+    }
+    em {
+        color: red;
     }
 </style>

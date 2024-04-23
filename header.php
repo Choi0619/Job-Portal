@@ -84,7 +84,19 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="search.php">Search Jobs</a></li>
                 <?php
-                if (isset($_SESSION['user'])) {
+                if (isset($_SESSION['company_user'])) {
+                    // Display "Post Job" link for company users
+                    echo '<li><a href="post_job.php">Post Job</a></li>';
+                    // Display dropdown menu for company users
+                    echo '<li class="dropdown">';
+                    echo '<button class="dropbtn">' . $_SESSION['company_name'] . '</button>';
+                    echo '<div class="dropdown-content">';
+                    echo '<a href="profile_comp.php" class="username">Profile</a>';
+                    echo '<a href="posted_jobs.php" class="username">Posted Jobs</a>';
+                    echo '<a href="logout.php" class="username">Logout</a>';
+                    echo '</div>';
+                    echo '</li>';
+                } elseif (isset($_SESSION['user'])) {
                     // Display dropdown menu for logged-in user
                     echo '<li class="dropdown">';
                     echo '<button class="dropbtn">' . $_SESSION['username'] . '</button>';

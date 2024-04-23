@@ -48,17 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Update resume path
         $resume_path = $resume_data; // You need to insert the resume data into the database directly
-
-        // If you prefer to store the resume data in a file system, uncomment the following lines and comment the line above
-        /*
-        $upload_dir = "resumes/";
-        $resume_name = $_FILES['resume']['name'];
-        $resume_path = $upload_dir . $resume_name;
-        if (!move_uploaded_file($resume_tmp_name, $resume_path)) {
-            echo "Error: Failed to upload resume.";
-            exit();
-        }
-        */
     }
 
     // Update user information

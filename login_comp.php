@@ -27,9 +27,12 @@ if (isset($_POST['login'])) {
         if (password_verify($password, $hashed_password)) {
             $_SESSION['company_user'] = true;
             $_SESSION['company_id'] = $row['company_id']; // Set company ID in session
+            // Set company name in session
+            $_SESSION['company_name'] = $username; // Assuming the company username is used as the company name
             header("Location: index.php"); // Redirect to index.php after successful login for company users
             exit();
-        } else {
+        }
+         else {
             $error_message = "Invalid username or password.";
         }
     } else {
