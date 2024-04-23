@@ -1,37 +1,54 @@
 <?php
-session_start(); // Start the session
-include('db.php'); // Include the database connection
+// Start session if not already started
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Check if user is logged in
+// Check if company user is logged in
 if (!isset($_SESSION['company_user'])) {
-    header("Location: login.php"); // Redirect to login page if user is not logged in
+    // Redirect to login page if user is not logged in
+    header("Location: login.php");
     exit();
 }
 
+// Include database connection
+include('db.php');
+
+// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve user's username from session
-    $username = $_SESSION['company_user'];
-
     // Retrieve form data
-    $company_name = !empty($_POST['company_name']) ? $_POST['company_name'] : null;
-    $industry = !empty($_POST['industry']) ? $_POST['industry'] : null;
-    $size = !empty($_POST['size']) ? $_POST['size'] : null;
-    $description = !empty($_POST['description']) ? $_POST['description'] : null;
-    $address = !empty($_POST['address']) ? $_POST['address'] : null;
+    $company_id = $_SESSION['company_id'];
+    $company_name = $_POST['company_name'];
+    $industry = $_POST['industry'];
+    $size = $_POST['size'];
 
-    // Update company user information
-    $query = $conn->prepare("UPDATE companies SET company_name = ?, industry = ?, size = ?, description = ?, address = ? WHERE username = ?");
-    $query->bind_param("ssssss", $company_name, $industry, $size, $description, $address, $username);
-
-    if ($query->execute()) {
-        echo "<script>alert('Company information updated successfully.'); window.location.href='profile_comp.php';</script>";
-        exit();
-    } else {
-        echo "Error: Failed to update company information in database.";
+    // Validate 'size' field to ensure it matches one of the ENUM options
+    $allowed_sizes = ['Small', 'Medium', 'Large'];
+    if (!in_array($size, $allowed_sizes)) {
+        // Alert error message and redirect back to profile page
+        echo "<script>alert('Invalid size value. Please select from Small, Medium, or Large.');</script>";
+        header("Location: profile_comp.php");
         exit();
     }
-} else {
-    echo "Error: Invalid request method.";
-    exit();
+
+    $description = $_POST['description'];
+    $address = $_POST['address'];
+
+    // Prepare SQL statement to update company information in the database
+    $query = $conn->prepare("UPDATE companies SET company_name = ?, industry = ?, size = ?, description = ?, address = ? WHERE company_id = ?");
+    $query->bind_param("sssssi", $company_name, $industry, $size, $description, $address, $company_id);
+
+    // Execute SQL query
+    if ($query->execute()) {
+        // Alert success message
+        echo "<script>alert('Company information updated successfully!'); window.location.href='profile_comp.php';</script>";
+        exit();
+    } else {
+        // Alert error message
+        echo "<script>alert('Failed to update company information.');</script>";
+    }
 }
+
+// Close database connection
+$conn->close();
 ?>
