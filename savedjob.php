@@ -55,6 +55,7 @@ $rejected_jobs = getSavedJobs($conn, $user_id, 'rejected');
         /* Tab styles */
         .tab {
             overflow: hidden;
+            margin: 40px 0; /* Added margin top and bottom */
         }
 
         .tab button {
@@ -81,6 +82,7 @@ $rejected_jobs = getSavedJobs($conn, $user_id, 'rejected');
         .no-data {
             margin-top: 20px;
             text-align: center;
+            margin-bottom: 40px;
         }
     </style>
 </head>
@@ -109,7 +111,7 @@ $rejected_jobs = getSavedJobs($conn, $user_id, 'rejected');
             <?php endif; ?>
         </div>
 
-        <div id="reviewed" class="tabcontent">
+        <div id="reviewed" class="tabcontent" style="display: none;">
             <?php if (mysqli_num_rows($reviewed_jobs) > 0) : ?>
                 <div class="card-container">
                     <?php while ($row = mysqli_fetch_assoc($reviewed_jobs)) : ?>
@@ -126,7 +128,7 @@ $rejected_jobs = getSavedJobs($conn, $user_id, 'rejected');
             <?php endif; ?>
         </div>
 
-        <div id="rejected" class="tabcontent">
+        <div id="rejected" class="tabcontent" style="display: none;">
             <?php if (mysqli_num_rows($rejected_jobs) > 0) : ?>
                 <div class="card-container">
                     <?php while ($row = mysqli_fetch_assoc($rejected_jobs)) : ?>
