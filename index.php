@@ -15,7 +15,7 @@
                 <div class="caption">
                     <h2>Welcome to IT For Hire</h2>
                     <p>Find your dream IT job or post your IT job to find the right candidate for your company.</p>
-                    <a href="<?php echo isset($_SESSION['user_id']) ? 'search.php' : 'login.php'; ?>" class="main-button">Get Started</a>
+                    <a href="search.php" class="main-button">Get Started</a>
                 </div>
             </div>
         </section>
