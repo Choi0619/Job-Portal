@@ -92,7 +92,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     echo '<button class="dropbtn">' . $_SESSION['company_name'] . '</button>';
                     echo '<div class="dropdown-content">';
                     echo '<a href="profile_comp.php" class="username">Profile</a>';
-                    echo '<a href="posted_jobs.php" class="username">Posted Jobs</a>';
+                    echo '<a href="posted_job.php" class="username">Posted Jobs</a>';
                     echo '<a href="logout.php" class="username">Logout</a>';
                     echo '</div>';
                     echo '</li>';
