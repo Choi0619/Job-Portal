@@ -164,7 +164,6 @@ ALTER TABLE applicants ADD CONSTRAINT applicants_ibfk_1
     FOREIGN KEY (job_id) REFERENCES jobs(job_id)
     ON DELETE CASCADE;
 
-
 select * from applicants;
 select * from users;
 select * from admin;
@@ -174,5 +173,3 @@ select * from companies;
 select * from contact_messages;
 select * from userSkills;
 select * from skills;
-
-delete from contact_messages where name = 'admin';
