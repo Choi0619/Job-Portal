@@ -4,7 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Services - Job Portal</title>
-    <!-- Add any additional CSS or meta tags here -->
+    <style>
+        main {
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+        }
+        header {
+            margin-bottom: 40px; /* Adds margin below header and footer */
+        }
+        footer {
+            margin-top: 40px;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+
+    </style>
 </head>
 <body>
     <?php include 'header.php'; ?>
