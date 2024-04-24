@@ -25,7 +25,8 @@ CREATE TABLE users (
     date_of_birth DATE,
     phone VARCHAR(20),
     gender ENUM('M', 'F', 'Other'),
-    address TEXT
+    address TEXT,
+    resume LONGBLOB
 );
 
 CREATE TABLE admin (
@@ -98,18 +99,6 @@ CREATE TABLE contact_messages (
     email VARCHAR(255) NOT NULL,
     message TEXT NOT NULL,
     submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE Reviews (
-    review_id INT AUTO_INCREMENT PRIMARY KEY,
-    reviewer_id INT,
-    company_id INT,
-    review_type ENUM('Positive', 'Neutral', 'Negative'),
-    rating INT,
-    comment TEXT,
-    review_date TIMESTAMP,
-    FOREIGN KEY (reviewer_id) REFERENCES users(user_id),
-    FOREIGN KEY (company_id) REFERENCES companies(company_id)
 );
 
 
