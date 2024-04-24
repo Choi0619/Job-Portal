@@ -141,6 +141,7 @@ input[type="submit"]:hover {
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <label for="category_id">Category:</label>
         <select id="category_id" name="category_id">
+            <option value="">Select Category</option> <!-- Added default option -->
             <!-- Retrieve categories from the database -->
             <?php
             include('db.php');
@@ -151,6 +152,7 @@ input[type="submit"]:hover {
             $conn->close();
             ?>
         </select><br>
+
         <label for="title">Title:</label>
         <input type="text" id="title" name="title"><br>
         <label for="description">Description:</label>
