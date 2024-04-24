@@ -29,6 +29,18 @@ CREATE TABLE users (
     resume LONGBLOB
 );
 
+CREATE TABLE companies (
+    company_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    password VARCHAR(255),
+    email VARCHAR(100),
+    company_name VARCHAR(100),
+    industry VARCHAR(100),
+    size ENUM('Small', 'Medium', 'Large'),
+    description TEXT,
+    address TEXT
+);
+
 CREATE TABLE admin (
     admin_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50),
@@ -42,19 +54,6 @@ CREATE TABLE categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT
-);
-
-
-CREATE TABLE companies (
-    company_id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50),
-    password VARCHAR(255),
-    email VARCHAR(100),
-    company_name VARCHAR(100),
-    industry VARCHAR(100),
-    size ENUM('Small', 'Medium', 'Large'),
-    description TEXT,
-    address TEXT
 );
 
 CREATE TABLE skills (
@@ -92,7 +91,6 @@ CREATE TABLE applicants (
     FOREIGN KEY (job_id) REFERENCES jobs(job_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
-
 
 
 CREATE TABLE contact_messages (
@@ -159,10 +157,20 @@ INSERT INTO skills (name) VALUES
 ('Internet of Things (IoT)');
 
 ALTER TABLE applicants DROP FOREIGN KEY applicants_ibfk_1;
-
 ALTER TABLE applicants ADD CONSTRAINT applicants_ibfk_1
-    FOREIGN KEY (job_id) REFERENCES jobs(job_id)
-    ON DELETE CASCADE;
+    FOREIGN KEY (job_id) REFERENCES jobs(job_id) ON DELETE CASCADE;
+
+ALTER TABLE applicants DROP FOREIGN KEY applicants_ibfk_2;
+ALTER TABLE applicants ADD CONSTRAINT fk_user_id
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE;
+    
+ALTER TABLE userSkills DROP FOREIGN KEY userskills_ibfk_1;
+ALTER TABLE userSkills ADD CONSTRAINT fk_userSkills_user_id
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE;
+
+ALTER TABLE jobs DROP FOREIGN KEY jobs_ibfk_1;
+ALTER TABLE jobs ADD CONSTRAINT fk_jobs_company_id
+	FOREIGN KEY (company_id) REFERENCES companies(company_id) ON DELETE CASCADE;
 
 select * from applicants;
 select * from users;
