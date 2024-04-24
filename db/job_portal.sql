@@ -57,12 +57,12 @@ CREATE TABLE companies (
     address TEXT
 );
 
-CREATE TABLE Skills (
+CREATE TABLE skills (
     skill_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100)
 );
 
-CREATE TABLE UserSkills (
+CREATE TABLE userSkills (
     user_skill_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     skill_id INT,
