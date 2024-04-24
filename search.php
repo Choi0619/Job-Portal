@@ -79,4 +79,8 @@ include('footer.php');
     em {
         color: red;
     }
+    h2{
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
 </style>
