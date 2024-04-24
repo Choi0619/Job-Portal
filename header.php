@@ -84,7 +84,14 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="search.php">Search Jobs</a></li>
                 <?php
-                if (isset($_SESSION['company_user'])) {
+                if (isset($_SESSION['admin'])) {
+                    // Display admin-specific links
+                    echo '<li><a href="index.php">Home</a></li>';
+                    echo '<li><a href="about.php">About</a></li>';
+                    echo '<li><a href="service.php">Service</a></li>';
+                    echo '<li><a href="manage.php">Manage</a></li>';
+                    echo '<li><a href="logout.php">Logout</a></li>';
+                } elseif (isset($_SESSION['company_user'])) {
                     // Display "Post Job" link for company users
                     echo '<li><a href="post_job.php">Post Job</a></li>';
                     // Display dropdown menu for company users

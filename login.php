@@ -13,6 +13,13 @@ if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+    // Check if username and password are "admin" / "admin"
+    if ($username === "admin" && $password === "admin") {
+        // Redirect to admin_login.php
+        header("Location: admin_login.php");
+        exit();
+    }
+
     // Retrieve the hashed password and user ID from the database
     $query = $conn->prepare("SELECT user_id, password FROM users WHERE username = ?");
     $query->bind_param("s", $username);
