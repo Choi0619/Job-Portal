@@ -46,6 +46,9 @@ $result = $query->get_result();
                 echo '<h3>' . $row['title'] . '</h3>';
                 echo '<p><strong>Description:</strong> ' . $row['description'] . '</p>';
                 echo '<p><strong>Salary:</strong> $' . $row['salary'] . '</p>';
+                // Buttons for modifying or deleting the job
+                echo '<a href="edit_job.php?job_id=' . $row['job_id'] . '" class="edit-job">Edit Job</a>';
+                echo '<a href="delete_job.php?job_id=' . $row['job_id'] . '" class="delete-job" onclick="return confirm(\'Are you sure you want to delete this job?\')">Delete Job</a>';
                 // Button to view applicants for this job
                 echo '<a href="applicants.php?job_id=' . $row['job_id'] . '" class="view-applicants">View Applicants</a>';
                 echo '</div>';
