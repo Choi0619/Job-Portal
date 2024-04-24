@@ -96,6 +96,12 @@
 
 <style>
     /* Footer CSS, created by Gyuhwan Choi */
+    h2 {
+        color: #baf8ba;
+    }
+    .footer-section.contact-form h2 {
+        color: #fcd48f;
+    }
     footer {
         background-color: #111;
         color: #fff;
@@ -121,7 +127,7 @@
     }
 
     .about h2.logo {
-        color: gray;
+        color: #aaa;
     }
 
     .footer-content p {

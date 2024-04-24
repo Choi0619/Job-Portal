@@ -34,9 +34,9 @@ CREATE TABLE admin (
     username VARCHAR(50),
     password VARCHAR(255),
     email VARCHAR(100),
-    full_name VARCHAR(100)
+    f_name VARCHAR(100),
+    l_name VARCHAR(100)
 );
-
 
 CREATE TABLE categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -102,8 +102,8 @@ CREATE TABLE contact_messages (
 );
 
 
-INSERT INTO admins (name, email, password) VALUES
-('admin', 'admin@itforhire.com', 'admin');
+INSERT INTO admin (username, password, email, f_name, l_name)
+VALUES ('admin', 'admin', 'admin@itforhire.com', 'Admin', 'User');
 
 
 INSERT INTO categories (name, description) VALUES
@@ -136,3 +136,5 @@ select * from users;
 select * from jobs;
 select * from companies;
 select * from contact_messages;
+select * from userSkills;
+select * from skills;
