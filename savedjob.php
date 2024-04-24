@@ -30,7 +30,7 @@ function getSavedJobs($conn, $user_id, $status)
 
 // Retrieve saved jobs for each status
 $pending_jobs = getSavedJobs($conn, $user_id, 'pending');
-$reviewed_jobs = getSavedJobs($conn, $user_id, 'accepted');
+$reviewed_jobs = getSavedJobs($conn, $user_id, 'reviewed');
 $rejected_jobs = getSavedJobs($conn, $user_id, 'rejected');
 ?>
 

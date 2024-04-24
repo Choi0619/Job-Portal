@@ -1,60 +1,44 @@
 <?php
-// Start session if not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 // Include database connection
-include('db.php'); // Assuming you have a file for database connection
+include('db.php');
 
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get username and password from form
+// Initialize error message variable
+$error_message = "";
+
+if (isset($_POST['login'])) {
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // SQL query to check if the provided credentials match an admin user
-    $sql = "SELECT * FROM admin WHERE username = ?";
+    // Retrieve the password from the admin table based on the username
+    $query = $conn->prepare("SELECT password FROM admin WHERE username = ?");
+    $query->bind_param("s", $username);
+    $query->execute();
+    $result = $query->get_result();
 
-    // Prepare the SQL statement
-    $stmt = $conn->prepare($sql);
-
-    // Bind parameters
-    $stmt->bind_param("s", $username);
-
-    // Execute the query
-    $stmt->execute();
-
-    // Get the result
-    $result = $stmt->get_result();
-
-    // Check if there is a matching admin user
-    if ($result->num_rows == 1) {
-        // Fetch the row
+    if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
+        $stored_password = $row['password'];
 
         // Verify the password
-        if (password_verify($password, $row['password'])) {
-            // Set session variables
-            $_SESSION['admin'] = $row['admin_id'];
-
-            // Redirect to admin panel
-            header("Location: admin_panel.php");
+        if ($password === $stored_password) {
+            // Start session as admin
+            session_start();
+            $_SESSION['admin'] = true;
+            header("Location: index.php"); // Redirect to index.php after successful login for admin
             exit();
         } else {
-            // Password is incorrect
             $error_message = "Invalid username or password.";
         }
     } else {
-        // No matching admin user found
         $error_message = "Invalid username or password.";
     }
-
-    // Close the statement
-    $stmt->close();
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -258,7 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1 class="greeting">Hello, Admin User! 😊</h1>
         <div class="screen">
             <div class="screen__content">
-                <form class="login" action="admin_panel.php" method="POST">
+                <form class="login" action="" method="POST">
                     <div class="login__field">
                         <i class="login__icon fas fa-user"></i>
                         <input type="text" class="login__input" name="username" placeholder="Username" required>
@@ -283,5 +267,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <?php include('footer.php'); ?> <!-- Include your footer file -->
+
+
+
 </body>
 </html>

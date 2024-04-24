@@ -86,9 +86,6 @@ if (session_status() == PHP_SESSION_NONE) {
                 <?php
                 if (isset($_SESSION['admin'])) {
                     // Display admin-specific links
-                    echo '<li><a href="index.php">Home</a></li>';
-                    echo '<li><a href="about.php">About</a></li>';
-                    echo '<li><a href="service.php">Service</a></li>';
                     echo '<li><a href="manage.php">Manage</a></li>';
                     echo '<li><a href="logout.php">Logout</a></li>';
                 } elseif (isset($_SESSION['company_user'])) {

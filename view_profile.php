@@ -39,6 +39,11 @@ if (isset($_GET['user_id'])) {
         $resume_query->execute();
         $resume_result = $resume_query->get_result();
         $resume = $resume_result->fetch_assoc();
+
+        // Update application status to 'reviewed'
+        $update_query = $conn->prepare("UPDATE applicants SET application_status = 'reviewed' WHERE user_id = ?");
+        $update_query->bind_param("i", $user_id);
+        $update_query->execute();
     } else {
         // User not found, redirect back to previous page
         header("Location: {$_SERVER['HTTP_REFERER']}");

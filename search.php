@@ -39,9 +39,12 @@ $result = mysqli_query($conn, $sql);
             echo "<h3>" . htmlspecialchars($row['title']) . "</h3>";
             echo "<p><strong>Company:</strong> <a href='company_details.php?company_id=" . $row['company_id'] . "'>" . htmlspecialchars($row['company_name']) . "</a></p>";
             echo "<p><strong>Description:</strong> " . htmlspecialchars($row['description']) . "</p>";
-            // Check if user is not a company user before displaying the Apply button
-            if (!isset($_SESSION['company_user'])) {
+            // Check if user is not a company user or admin user before displaying the Apply button
+            if (!isset($_SESSION['company_user']) && !isset($_SESSION['admin'])) {
                 echo '<a class="apply-button" href="apply.php?job_id=' . $row['job_id'] . '">Apply</a>';
+            } elseif (isset($_SESSION['admin'])) {
+                // Display a message for admin users instead of the Apply button
+                echo '<p><em>Admin users cannot apply for jobs.</em></p>';
             } else {
                 // Display a message for company users instead of the Apply button
                 echo '<p><em>Company users cannot apply for jobs.</em></p>';
