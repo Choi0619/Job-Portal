@@ -175,4 +175,4 @@ select * from contact_messages;
 select * from userSkills;
 select * from skills;
 
-delete from jobs where job_id < 4;
+delete from contact_messages where name = 'admin';
