@@ -93,6 +93,8 @@ CREATE TABLE applicants (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+
+
 CREATE TABLE contact_messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,

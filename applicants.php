@@ -110,6 +110,19 @@ $applicants_result = $applicants_query->get_result();
         .reject-btn:hover {
             background-color: #bd2130;
         }
+        .withdraw-btn {
+            background-color: #ffc107;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 10px;
+        }
+        .withdraw-btn:hover {
+            background-color: #e0a800;
+        }
         .profile-btn {
             background-color: #28a745;
             color: white;
@@ -160,10 +173,10 @@ $applicants_result = $applicants_query->get_result();
                     echo "<td>" . $applicant['application_date'] . "</td>";
                     echo "<td>";
                     echo "<a href='view_profile.php?user_id={$applicant['user_id']}' class='profile-btn'>View Profile</a>";
-                    if ($applicant['application_status'] != 'viewed') {
+                    if ($applicant['application_status'] != 'rejected') {
                         echo "<a href='reject_applicant.php?job_id={$job_id}&user_id={$applicant['user_id']}' class='reject-btn'>Reject</a>";
                     } else {
-                        echo "<span class='viewed'>Viewed</span>";
+                        echo "<a href='reject_applicant.php?job_id={$job_id}&user_id={$applicant['user_id']}' class='withdraw-btn'>Withdraw Reject</a>";
                     }
                     echo "</td>";
                     echo "</tr>";
