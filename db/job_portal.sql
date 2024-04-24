@@ -87,7 +87,7 @@ CREATE TABLE applicants (
     applicant_id INT AUTO_INCREMENT PRIMARY KEY,
     job_id INT NOT NULL,
     user_id INT NOT NULL,
-    application_status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
+    application_status ENUM('pending', 'reviewed', 'rejected') DEFAULT 'pending',
     application_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (job_id) REFERENCES jobs(job_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
@@ -101,16 +101,20 @@ CREATE TABLE contact_messages (
     submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
 INSERT INTO admin (username, password, email, f_name, l_name)
 VALUES ('admin', 'admin', 'admin@itforhire.com', 'Admin', 'User');
-
 
 INSERT INTO categories (name, description) VALUES
 ('Software', 'Software development jobs'),
 ('Marketing', 'All marketing related jobs'),
 ('Technology', 'Jobs related to technology and software development'),
-('Data Analysis', 'Jobs related to data analysis and business intelligence');
+('Data Analysis', 'Jobs related to data analysis and business intelligence'),
+('Network Administration', 'Jobs related to network administration and infrastructure management'),
+('Cybersecurity', 'Jobs related to cybersecurity and information security'),
+('Web Development', 'Jobs related to web development and design'),
+('Database Administration', 'Jobs related to database administration and management'),
+('IT Support', 'Jobs related to IT support and helpdesk services'),
+('Cloud Computing', 'Jobs related to cloud computing and cloud infrastructure management');
 
 
 INSERT INTO companies (username, password, email, company_name, industry, size, description, address)
@@ -130,11 +134,43 @@ INSERT INTO jobs (company_id, category_id, title, description, salary) VALUES
 (5, 4, 'Human Resources Specialist', 'Manage employee recruitment, onboarding, and HR activities.', 65000.00),
 (2, 2, 'Social Media Manager', 'Create and execute social media strategies for brand promotion.', 70000.00);
 
+INSERT INTO skills (name) VALUES
+('Programming Languages'),
+('Web Development'),
+('Mobile App Development'),
+('Database Management'),
+('Data Analysis'),
+('Cybersecurity'),
+('Cloud Computing'),
+('Artificial Intelligence'),
+('Machine Learning'),
+('Network Administration'),
+('UI/UX Design'),
+('DevOps'),
+('Project Management'),
+('Quality Assurance'),
+('System Administration'),
+('Digital Marketing'),
+('Content Management Systems (CMS)'),
+('E-commerce'),
+('Blockchain'),
+('Internet of Things (IoT)');
+
+ALTER TABLE applicants DROP FOREIGN KEY applicants_ibfk_1;
+
+ALTER TABLE applicants ADD CONSTRAINT applicants_ibfk_1
+    FOREIGN KEY (job_id) REFERENCES jobs(job_id)
+    ON DELETE CASCADE;
+
 
 select * from applicants;
 select * from users;
+select * from admin;
+select * from categories;
 select * from jobs;
 select * from companies;
 select * from contact_messages;
 select * from userSkills;
 select * from skills;
+
+delete from jobs where job_id < 4;
