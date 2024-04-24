@@ -102,6 +102,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     echo '<button class="dropbtn">' . $_SESSION['username'] . '</button>';
                     echo '<div class="dropdown-content">';
                     echo '<a href="profile.php" class="username">My Profile</a>';
+                    echo '<a href="skill.php" class="username">My Skills</a>';
                     echo '<a href="savedjob.php" class="username">Applied Jobs</a>'; // New link for Saved Jobs
                     echo '<a href="logout.php" class="username">Logout</a>';
                     echo '</div>';

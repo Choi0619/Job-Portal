@@ -73,7 +73,8 @@ include('footer.php');
         text-decoration: none;
         border-radius: 5px;
         transition: background-color 0.3s;
-        margin-bottom: 50px; /* Adds margin at the bottom */
+        margin-bottom: 30px; /* Adds margin at the bottom */
+        margin-top: -30px;
 
     }
     .apply-button:hover, .active:hover {

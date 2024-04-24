@@ -96,7 +96,7 @@
 
 <style>
     /* Footer CSS, created by Gyuhwan Choi */
-    h2 {
+    .footer-section.links h2 {
         color: #baf8ba;
     }
     .footer-section.contact-form h2 {
