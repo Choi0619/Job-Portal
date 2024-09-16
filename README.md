@@ -55,10 +55,6 @@ Regular users will be directed to a special page to log in with their admin cred
 
 Contributions are welcome! If you have any ideas for improvements or would like to report a bug, please submit an issue or a pull request.
 
-## License 📄
-
-This project is owned by Gyuhwan Choi. You have the full rights to the project as its creator.
-
 ## Created By 👨‍💻
 
 This project was created by Gyuhwan Choi.
